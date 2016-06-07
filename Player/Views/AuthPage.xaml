@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="Player.Views.AuthPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Player"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding auth, RelativeSource={RelativeSource Self}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5 150 50 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="500" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Email" Grid.Column="0" FontSize="30" Margin="50 0 0 0"/>
+            <TextBox Grid.Column="1" Name="Email" Text="{Binding Path=email, Mode=TwoWay}" FontSize="30"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="5 5 50 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="500" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Password" Grid.Column="0" FontSize="30" Margin="50 0 0 0"/>
+            <PasswordBox Grid.Column="1" Name="Password" Password="{Binding Mode=TwoWay, Path=password}" FontSize="30"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="200 0 5 0"  Name="Submit" Click="Submit_Click"  Content="Sign in" FontSize="30" Width="500" Background="#007fbc"/>
+        </Grid>
+    </Grid>
+</Page>
