@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Player.Views;
+using Player.Converters;
 
 namespace Player
 {

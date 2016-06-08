@@ -98,6 +98,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\VolumeConverter.cs" />
+    <Compile Include="Converters\PositionConverter.cs" />
     <Compile Include="Database\User.cs" />
     <Compile Include="Interfaces\IMusicCollection.cs" />
     <Compile Include="Migrations\20160607201916_User.cs" />

@@ -5,20 +5,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Reflection;
 
 namespace Player.Utils
 {
-    public class ObservableCollectionEx<T> : ObservableCollection<T>
+    public class ObservableCollectionEx<T> : ObservableCollection<T> where T : class 
     {
         /// <summary> 
         /// Adds the elements of the specified collection to the end of the ObservableCollection(Of T). 
         /// </summary> 
-        public void AddRange(IEnumerable<T> collection)
+        public void AddRange(IEnumerable<T> items)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            if (items == null)
+                throw new ArgumentNullException("items");
 
-            foreach (var i in collection) Items.Add(i);
+            foreach (var item in items)
+                Items.Add(item);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        /// <summary>
+        /// Add or update reange of items
+        /// </summary>
+        /// <param name="items">New items</param>
+        /// <param name="comparer">Comparer function</param>
+        public void AddUpdateRange(IEnumerable<T> items, Func<T,T, bool> comparer)
+        {
+            if (items == null)
+                throw new ArgumentNullException("items");
+
+            foreach (T item in items)
+                AddUpdate(item, comparer);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        /// <summary>
+        /// Add or update item
+        /// </summary>
+        /// <param name="item">New item</param>
+        /// <param name="comparer">Comparer function</param>
+        public void AddUpdate(T item, Func<T,T, bool> comparer)
+        {
+            T existing = Items.FirstOrDefault(x => comparer(x, item));
+            if (existing == null)
+                Items.Add(item);
+            else
+                existing = item;
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 

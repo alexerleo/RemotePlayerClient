@@ -84,6 +84,11 @@ namespace Player.Models
             return await bytesToStream(_stream);
         }
 
+        /// <summary>
+        /// Get file stream from bytes array
+        /// </summary>
+        /// <param name="bytes">Serialized stream</param>
+        /// <returns>File random access stream</returns>
         private async Task<IRandomAccessStream> bytesToStream(byte[] bytes)
         {
             StorageFile file;

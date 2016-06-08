@@ -17,7 +17,10 @@ namespace Player.Controllers
             onFailed += failed;
             User user = Library.collection.db.users.FirstOrDefault();
             if (user != null)
+            {
+                SocketController.instance.Auth(user.email, user.password);
                 onSuccess();
+            }                
         }
 
         public delegate void SuccessEvent();

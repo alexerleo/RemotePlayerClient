@@ -13,14 +13,6 @@ namespace Player.Controllers
 {
     public class SocketController
     {
-        public static SocketController instance;
-
-        private Socket socket;
-        private string serverUri = "http://localhost:3000";
-        private string authMessage = "";
-
-        public SocketCallbacks callbacks { get; private set; } = new SocketCallbacks();
-
         static SocketController()
         {
             instance = new SocketController();
@@ -34,7 +26,7 @@ namespace Player.Controllers
             {
                 callbacks.onConnected += () =>
                 {
-                    if(!String.IsNullOrWhiteSpace(authMessage))
+                    if (!String.IsNullOrWhiteSpace(authMessage))
                     {
                         socket.Emit("Auth", authMessage);
                     }
@@ -60,8 +52,16 @@ namespace Player.Controllers
             socket.On("Auth", (data) =>
             {
                 callbacks.Auth((String)data);
-            });       
+            });
         }
+
+        public static SocketController instance;
+
+        private Socket socket;
+        private string serverUri = "https://remoteplayerhost.herokuapp.com";
+        private string authMessage = "";
+
+        public SocketCallbacks callbacks { get; private set; } = new SocketCallbacks();      
         
         public void SendDevice(Device device)
         {

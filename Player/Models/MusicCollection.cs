@@ -12,6 +12,13 @@ namespace Player.Models
     [DataContract]
     public class MusicCollection
     {
+        public MusicCollection(MusicCollectionContext context)
+        {
+            bands = context.bands.ToList();
+            albums = context.albums.ToList();
+            tracks = context.tracks.ToList();
+        }
+
         [DataMember]
         public List<Band> bands { get; set; }
 
@@ -25,13 +32,6 @@ namespace Player.Models
         /// Tracks list
         /// </summary>
         [DataMember]
-        public List<Track> tracks { get; set; }
-
-        public MusicCollection(MusicCollectionContext context)
-        {
-            bands = context.bands.ToList();
-            albums = context.albums.ToList();
-            tracks = context.tracks.ToList();
-        }
+        public List<Track> tracks { get; set; }        
     }
 }

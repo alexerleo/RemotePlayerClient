@@ -13,7 +13,17 @@ using Player.Utils;
 namespace Player.Controllers
 {
     public class MainController
-    { 
+    {
+        public MainController()
+        {
+            Library.InitCollection();
+            devices.AddRange(Library.devices);
+            current.device = devices.FirstOrDefault(x => x.isLocal == true);
+            tracks.AddRange(current.device.collection.tracks);
+            bands.AddRange(current.device.collection.bands);
+            albums.AddRange(current.device.collection.albums);
+        }
+
         private Playlist playlist = new Playlist();
 
         public Library Library { get; private set; } = new Library();
@@ -93,18 +103,6 @@ namespace Player.Controllers
             albums.AddRange(device.collection.albums);
             tracks.AddRange(device.collection.tracks);
             current.device = device;
-        }
-
-        public MainController()
-        {
-            Library.InitCollection();
-            devices.AddRange(Library.devices);
-            current.device = devices.FirstOrDefault(x => x.isLocal == true);
-            tracks.AddRange(current.device.collection.tracks);
-            bands.AddRange(current.device.collection.bands);
-            albums.AddRange(current.device.collection.albums);
-        }
-
-
+        }        
     }
 }
