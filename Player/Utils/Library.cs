@@ -17,14 +17,24 @@ namespace Player.Utils
 {
     public class Library
     {
-        public Library()
+        private Library()
         {
             devices.Add(new Device()
             {
                 collection = new MusicCollection(collection.db),
                 info = collection.db.devices.FirstOrDefault()
             });
+            InitCollection();
         }
+
+        static Library()
+        {
+            instance = new Library();
+        }
+
+        public static Library instance;
+
+        
 
         public delegate void PlayingEvent(IRandomAccessStream stream, string contentType);
         public event PlayingEvent Playing;        
@@ -32,9 +42,12 @@ namespace Player.Utils
         #region callbacks
         private void OnAuth(string message)
         {
-            Device device = devices.First(x => x.isLocal == true);
-            device.info = collection.db.devices.First();
-            Socket.SendDevice(device);
+            if (message == "200")
+            {
+                Device device = devices.First(x => x.isLocal == true);
+                device.info = collection.db.devices.First();
+                Socket.SendDevice(device);
+            }
         }
         
         private async void OnGetTrack(string alias, Guid device_id)
@@ -61,7 +74,7 @@ namespace Player.Utils
         }
         #endregion
 
-        public static Collection collection = new Collection();
+        public Collection collection = new Collection();
 
         public SocketController Socket = SocketController.instance;
 
@@ -103,6 +116,7 @@ namespace Player.Utils
 
         public async void InitCollection()
         {
+            Socket.ClearCallbacks();
             Socket.callbacks.onGetTrack += OnGetTrack;
             Socket.callbacks.onTrack += OnTrack;
             Socket.callbacks.onDevices += OnDevices;

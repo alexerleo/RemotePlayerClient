@@ -16,7 +16,7 @@ namespace Player.Controllers
     {
         public MainController()
         {
-            Library.InitCollection();
+            //Library.InitCollection();
             devices.AddRange(Library.devices);
             current.device = devices.FirstOrDefault(x => x.isLocal == true);
             tracks.AddRange(current.device.collection.tracks);
@@ -26,7 +26,7 @@ namespace Player.Controllers
 
         private Playlist playlist = new Playlist();
 
-        public Library Library { get; private set; } = new Library();
+        public Library Library { get; private set; } = Library.instance;
 
         public ObservableCollectionEx<Device> devices { get; set; } = new ObservableCollectionEx<Device>();
         public ObservableCollectionEx<Track> tracks { get; set; } = new ObservableCollectionEx<Track>();

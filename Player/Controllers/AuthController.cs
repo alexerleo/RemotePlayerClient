@@ -15,12 +15,10 @@ namespace Player.Controllers
         {
             onSuccess += success;
             onFailed += failed;
+            SocketController.instance.callbacks.onAuth += OnAuth;
             User user = Library.collection.db.users.FirstOrDefault();
             if (user != null)
-            {
                 SocketController.instance.Auth(user.email, user.password);
-                onSuccess();
-            }                
         }
 
         public delegate void SuccessEvent();
@@ -31,14 +29,16 @@ namespace Player.Controllers
     
         public string email { get; set; }
         public string password { get; set; }
+        private Library Library = Library.instance;
+
         public void Submit()
         {
-            SocketController.instance.Auth(email, password);
-            SocketController.instance.callbacks.onAuth += OnAuth;
+            SocketController.instance.Auth(email, password);            
         }
+
         private void OnAuth(string message)
         {
-            SocketController.instance.ClearCallbacks();
+            //SocketController.instance.ClearCallbacks();
             try
             {
                 if (message == "401")

@@ -25,13 +25,19 @@ namespace Player.Controllers
             socket.On(Socket.EVENT_CONNECT, () =>
             {
                 callbacks.onConnected += () =>
-                {
-                    if (!String.IsNullOrWhiteSpace(authMessage))
+                {                
+                    if (!String.IsNullOrWhiteSpace(authMessage) && (isDisconnected ?? false))
                     {
                         socket.Emit("Auth", authMessage);
                     }
+                    isDisconnected = false;
                 };
                 callbacks.Connected();
+            });
+
+            socket.On(Socket.EVENT_DISCONNECT, () =>
+            {
+                isDisconnected = true;
             });
 
             socket.On("GetTrack", (data) =>
@@ -50,7 +56,7 @@ namespace Player.Controllers
             });
 
             socket.On("Auth", (data) =>
-            {
+            {               
                 callbacks.Auth((String)data);
             });
         }
@@ -60,6 +66,7 @@ namespace Player.Controllers
         private Socket socket;
         private string serverUri = "https://remoteplayerhost.herokuapp.com";
         private string authMessage = "";
+        private bool? isDisconnected = null;
 
         public SocketCallbacks callbacks { get; private set; } = new SocketCallbacks();      
         
