@@ -56,7 +56,8 @@ namespace Player.Utils
             {
                 device.name = device.info.name;
             }
-            devices.AddRange(devices);
+            
+            this.devices.AddRange(devices);
         }
         #endregion
 
