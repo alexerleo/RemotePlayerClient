@@ -53,7 +53,7 @@
                           Name="DeviceList" 
                           SelectionChanged="DeviceList_SelectionChanged" 
                           ItemsSource="{Binding Mode=OneWay, Path=devices}" 
-                          SelectedItem="{Binding Mode=OneWay, Path=current.device}">
+                          SelectedItem="{Binding Mode=TwoWay, Path=current.device}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding name}"/>
@@ -63,8 +63,8 @@
                 <ListView Grid.Column="1" 
                           Name="BandsList" 
                           SelectionChanged="BandsList_SelectionChanged" 
-                          ItemsSource="{Binding Mode=TwoWay, Path=bands}" 
-                          SelectedItem="{Binding Mode=OneWay, Path=current.band}">
+                          ItemsSource="{Binding Mode=OneWay, Path=bands}" 
+                          SelectedItem="{Binding Mode=TwoWay, Path=current.band}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding name}"/>
@@ -73,9 +73,9 @@
                 </ListView>
                 <ListView Grid.Column="2"  
                           Name="AlbumsList" 
-                          SelectionChanged="AlbumsList_SelectionChanged"
-                          ItemsSource="{Binding Mode=TwoWay, Path=albums}" 
-                          SelectedItem="{Binding Mode=OneWay, Path=current.album}">
+                          SelectionChanged="AlbumsList_SelectionChanged"                          
+                          ItemsSource="{Binding Mode=OneWay, Path=albums}" 
+                          SelectedItem="{Binding Mode=TwoWay, Path=current.album}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding name}"/>
@@ -86,7 +86,7 @@
                           Name="TrackList" 
                           SelectionChanged="TrackList_SelectionChanged"
                           ItemsSource="{Binding Mode=OneWay, Path=tracks}" 
-                          SelectedItem="{Binding Mode=OneWay, Path=current.track}">
+                          SelectedItem="{Binding Mode=TwoWay, Path=current.track}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding name}"/>

@@ -57,7 +57,7 @@ namespace Player.Utils
                 device.name = device.info.name;
             }
             
-            this.devices.AddRange(devices);
+            this.devices.AddUpdateRange(devices, (a, b) => a.info.id == b.info.id);
         }
         #endregion
 
@@ -65,7 +65,7 @@ namespace Player.Utils
 
         public SocketController Socket = SocketController.instance;
 
-        public List<Device> devices { get; set; } = new List<Device>();        
+        public ObservableCollectionEx<Device> devices { get; set; } = new ObservableCollectionEx<Device>();        
 
         public async Task<StorageFile> GetPlayFile(string alias)
         {

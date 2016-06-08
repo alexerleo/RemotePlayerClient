@@ -36,7 +36,7 @@ namespace Player.Controllers
 
         public void NextTrack()
         {
-            current.track = playlist.next();
+            current.track = playlist.next();            
             playNext();
         }
 
@@ -50,40 +50,36 @@ namespace Player.Controllers
         {
             if (current.track == null)
                 return;
-            var _next = tracks.FirstOrDefault(x => x.alias == current.track?.alias);
-            if (_next == null)
-                Library.SetPlayItem(current.track);
-            else            
-                current.track = _next;
+            Library.SetPlayItem(current.track);
         }
 
-        public async void SelectTrack(Track track)
+        public async void SelectTrack()
         {
+            if (playlist.current == current.track)
+                return;
             playlist.Set(tracks.ToList());
-            current.track = track;
             playlist.current = current.track;
             IRandomAccessStream stream;
             if (current.device.isLocal)
             {
-                var file = await Library.GetPlayFile(track.alias);
+                var file = await Library.GetPlayFile(current.track.alias);
                 stream = await file.OpenAsync(FileAccessMode.Read);
                 Library.SetPlayItem(stream, file.ContentType);
             }
             else
-                SocketController.instance.GetTrack(current.device.info.id, track.alias);            
+                SocketController.instance.GetTrack(current.device.info.id, current.track.alias);            
         }
 
-        public void SelectAlbum(Album album)
+        public void SelectAlbum()
         {
             tracks.Clear();
-            tracks.AddRange(album.tracks);
-            current.album = album;
+            tracks.AddRange(current.album.tracks);
         }
         
-        public void SelectBand(Band band)
+        public void SelectBand()
         {
             albums.Clear();
-            albums.AddRange(band.albums.ToList());
+            albums.AddRange(current.band.albums.ToList());
             List<Track> _tracks = new List<Track>();
             foreach (var album in albums.Select(x => x.tracks))
             {
@@ -91,18 +87,16 @@ namespace Player.Controllers
             }
             tracks.Clear();
             tracks.AddRange(_tracks);
-            current.band = band;
         }
 
-        public void SelectDevice(Device device)
+        public void SelectDevice()
         {
             bands.Clear();
             albums.Clear();
             tracks.Clear();
-            bands.AddRange(device.collection.bands);
-            albums.AddRange(device.collection.albums);
-            tracks.AddRange(device.collection.tracks);
-            current.device = device;
+            bands.AddRange(current.device.collection.bands);
+            albums.AddRange(current.device.collection.albums);
+            tracks.AddRange(current.device.collection.tracks);
         }        
     }
 }

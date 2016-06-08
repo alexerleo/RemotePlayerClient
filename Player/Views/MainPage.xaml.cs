@@ -115,8 +115,7 @@ namespace Player.Views
         {
             try
             {                             
-                var track = (Track)(e.AddedItems.First());
-                controller.SelectTrack(track);    
+                controller.SelectTrack();    
             }
             catch(Exception ex)
             {
@@ -128,8 +127,7 @@ namespace Player.Views
         {            
             try
             {
-                var band = (Band)(e.AddedItems.FirstOrDefault());
-                controller.SelectBand(band);
+                controller.SelectBand();
             }
             catch(Exception ex)
             {
@@ -141,8 +139,7 @@ namespace Player.Views
         {
             try
             {
-                var album = (Album)(e.AddedItems.First());
-                controller.SelectAlbum(album);
+                controller.SelectAlbum();
             }
             catch(Exception)
             {
@@ -154,8 +151,7 @@ namespace Player.Views
         {
             try
             {
-                var device = (Device)(e.AddedItems.First());
-                controller.SelectDevice(device);
+                controller.SelectDevice();
             }
             catch (Exception)
             {
