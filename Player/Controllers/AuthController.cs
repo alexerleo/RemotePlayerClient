@@ -16,7 +16,7 @@ namespace Player.Controllers
             onSuccess += success;
             onFailed += failed;
             SocketController.instance.callbacks.onAuth += OnAuth;
-            User user = Library.collection.db.users.FirstOrDefault();
+            user = Library.collection.db.users.FirstOrDefault();
             if (user != null)
                 SocketController.instance.Auth(user.email, user.password);
         }
@@ -30,6 +30,7 @@ namespace Player.Controllers
         public string email { get; set; }
         public string password { get; set; }
         private Library Library = Library.instance;
+        private User user;
 
         public void Submit()
         {
@@ -45,11 +46,12 @@ namespace Player.Controllers
                     onFailed();
                 else
                 {
-                    login(new User()
-                    {
-                        email = email,
-                        password = password
-                    });
+                    if(user == null)
+                        login(new User()
+                        {
+                            email = email,
+                            password = password
+                        });
                     
                     onSuccess();
                 }
