@@ -15,10 +15,13 @@ namespace Player.Controllers
         {
             onSuccess += success;
             onFailed += failed;
-            SocketController.instance.callbacks.onAuth += OnAuth;
             user = Library.collection.db.users.FirstOrDefault();
-            if (user != null)
+            if (user != null){
                 SocketController.instance.Auth(user.email, user.password);
+                onSuccess();
+            }
+            else
+                SocketController.instance.callbacks.onAuth += OnAuth;
         }
 
         public delegate void SuccessEvent();
